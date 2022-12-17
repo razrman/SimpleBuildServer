@@ -29,23 +29,25 @@ def about():
 def hello():
     return render_template('hello.html')
 
-@app.route('/recycle/')
+@app.route('/register/')
 def recycle():
-    return render_template(
-        'recycle.html',
-        server_list=[{'name':'idq-datahive-dev.pnmac.com'}, {'name':'pcg-datahive-dev.pnmac.com'}, {'name':'edc-datahive-dev.pnmac.com'}])
+    return render_template('register.html')
 
-@app.route('/axon/')
-def axon():
-    return render_template(
-        'axon.html',
-        server_list=[{'name':'datahive-dev.pnmac.com'}])
+@app.route('/register/',methods=['POST'])
+def register_post():
+    text = request.form['text']
+    processed_text = text.upper()
+    return processed_text
 
 @app.route("/build/")
 def build():
     return render_template(
             'build.html',
             command_list=[{'name':'build'},{'name':'test'},{'name':'clean'},{'name':'deploy'}])
+
+@app.route("/gitlab/",methods=['POST'])
+def gitlab():
+    return jsonify(request.json)
 
 @app.route("/dobuild/", methods=['GET','POST'])
 def dobuild():
