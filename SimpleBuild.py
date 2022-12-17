@@ -30,7 +30,7 @@ def hello():
     return render_template('hello.html')
 
 @app.route('/register/')
-def recycle():
+def register():
     return render_template('register.html')
 
 @app.route('/register/',methods=['POST'])
@@ -47,7 +47,8 @@ def build():
 
 @app.route("/gitlab/",methods=['POST'])
 def gitlab():
-    return jsonify(request.json)
+    app.logger.info(request.get_json())
+    return "Message Received"
 
 @app.route("/dobuild/", methods=['GET','POST'])
 def dobuild():
@@ -176,4 +177,4 @@ def run_mapping():
         return command.stdout
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port='8080')
+    app.run(host='0.0.0.0',port='8080',debug=True)
