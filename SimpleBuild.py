@@ -6,7 +6,7 @@ import subprocess
 import re
 import logging
 import time
-from flask import jsonify, request, Flask, render_template, Response
+from flask import jsonify, request, Flask, render_template, Response, send_from_directory
 from OpenSSL import SSL
 import ssl
 import datetime
@@ -24,6 +24,12 @@ def index():
 @app.route('/about/')
 def about():
     return render_template('about.html')
+
+@app.route('/buildserver/')
+def buildserver():
+    workingdir = os.path.abspath(os.getcwd())
+    filepath = workingdir + '/files/'
+    return send_from_directory(filepath, 'build-server.pdf')
 
 @app.route('/hello/')
 def hello():
