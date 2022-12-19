@@ -69,6 +69,8 @@ def dobuild():
     global gitrepo
     global reponame
     action = request.form['submit_button']
+    if "Please" in reponame:
+        return reponame
     if str(action) == 'build':
         cmd = "cd ../workspace/" + reponame + " && make "
         command = subprocess.check_call(cmd,shell=True)
