@@ -4,24 +4,15 @@
   <h1>{% block title %} Builder Commands {% endblock %}</h1>
   <h3>Simple Builder is a web application</h3>
   <h3>That runs C Language builds</h3>
-  <h3>
+  <h3> {{ app_name }} </h3>
   <form class="form-inline" method="POST" action="{{ url_for('dobuild') }}"> 
   <div class="form-group">
     <div class="input-group">
-        <span class="input-group-addon">Please select</span>
-            <select name="commmand_select" class="selectpicker form-control">
-              {% for o in command_list %}
-              <option value="{{ o.name }}">{{ o.name }}</option>
-              {% endfor %}
-            </select>
-    </div>
-    <br>
     <button type="submit" class="btn btn-default" name="submit_button" value="build" onclick="return confirm('Are you sure you want to BUILD?');">BUILD</button>
     <button type="submit" class="btn btn-default" name="submit_button" value="clean" onclick="return confirm('Are you sure you want to CLEAN?');">CLEAN</button>
     <button type="submit" class="btn btn-default" name="submit_button" value="test" onclick="return confirm('Are you sure you want to TEST?');">TEST</button>
     <button type="submit" class="btn btn-default" name="submit_button" value="status">CHECK LOG</button>
   </div>
-  </h3>
-</form>
+  </form>
 
 {% endblock %}

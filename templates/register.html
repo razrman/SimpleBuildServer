@@ -8,15 +8,13 @@
   <form class="form-inline" method="POST" action="{{ url_for('register_post') }}"> 
   <div class="form-group">
     <div class="input-group">
-        <span class="input-group-addon">Please git clone parameter (git@github.com:razrman/SimpleApp.git)</span>
+	    <span class="input-group-addon">Application to Register (SimpleApp for example)</span>
 	<form method="POST">
 	<input name="text">
 	<input type="submit">
-	<\form>
     </div>
     <br>
-    <button type="submit" class="btn btn-default" name="submit_button" value="recycle" onclick="return confirm('Are you sure you want to REGISTER?');">REGISTER</button>
-    <button type="submit" class="btn btn-default" name="submit_button" value="checklog">CHECK LOG</button>
+    <button type="submit" class="btn btn-default" name="submit_button" value="register" onclick="return confirm('Are you sure you want to REGISTER?');">REGISTER</button>
   </div>
   </h3>
 </form>
