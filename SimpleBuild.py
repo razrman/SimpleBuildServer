@@ -75,33 +75,37 @@ def dobuild():
     global gitrepo
     global reponame
     action = request.form['submit_button']
+    logfile = "../log/" + reponame + "-"+action+".out"
     if "Please" in reponame:
         return reponame
     if str(action) == 'build':
         cmd = "cd ../workspace/" + reponame + " && make "
-        command = subprocess.check_call(cmd,shell=True)
+        execute(cmd,logfile)
+        #command = subprocess.check_call(cmd,shell=True)
         lastaction="build"
         return gitrepo + " " + cmd
     elif str(action) == 'clean':
         cmd = "cd ../workspace/" + reponame + " && make clean"
-        command = subprocess.check_call(cmd,shell=True)
+        execute(cmd,logfile)
+        #command = subprocess.check_call(cmd,shell=True)
         lastaction="clean"
         return gitrepo + " " + cmd
     elif str(action) == 'test':
         cmd = "cd ../workspace/" + reponame + " && make test"
         lastaction="test"
         try:
-            command = subprocess.check_call(cmd,shell=True)
+            # command = subprocess.check_call(cmd,shell=True)
+            execute(cmd,logfile)
             return gitrepo + " " + cmd
         except:
             return gitrepo + " Makefile does not have a test step"
     elif str(action) == 'deploy':
-        cmd = "cd ../workspace/" + reponame + " && echo 'Deploying " + reponame
+        cmd = "cd ../workspace/" + reponame + " && echo 'Deploying' " + reponame
         command = subprocess.check_call(cmd,shell=True)
         lastaction="deploy"
         return gitrepo + " " + cmd
     elif str(action) == 'status':
-        filename = "/tmp/" + reponame + "-"+lastaction+".out"
+        filename = "../log/" + reponame + "-"+lastaction+".out"
         if os.path.exists(filename):
             cmd="cat " + filename
             command = subprocess.run(cmd,shell=True,stdout=subprocess.PIPE)
@@ -113,6 +117,19 @@ def dobuild():
     else:
         return " ERROR: " + gitrepo + " Build Action " + action + " Incorrect"
 
+def execute(command,logfile):
+
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+    output = process.communicate()[0]
+    exitCode = process.returncode
+
+    if (exitCode == 0):
+        with open(logfile, 'w') as f:
+            print(logfile,file=f)
+            print(output.decode(),file=f)
+    else:
+        raise ProcessException(command, exitCode, output)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port='8080',debug=True)
